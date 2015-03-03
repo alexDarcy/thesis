@@ -1,0 +1,207 @@
+\chapter*[Conclusion]{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
+
+The goal of this thesis was to design and implement a framework for a global
+atmospheric chemistry-transport model, adapted to massively parallel emerging
+architectures. The characteristics of Pangolin have been chosen to obtain a
+scalable application for current and future parallel architectures. In
+particular, we focused on the message-passing paradigm applied to the advection
+to drive our parallelization strategy.  We adopted an Eulerian approach for
+advection on the sphere associated with a specific domain decomposition that
+ease the parallelization of the code and appear competitive with the
+semi-Lagrangian approaches.  In particular, the current CTM of M\'et\'eo-France,
+MOCAGE, has a semi-Lagrangian advection scheme and the goal was to investigate
+an alternative approach to exploit more easily the parallel architecture of the
+large M\'et\'eo-France's computers. In an Eulerian framework, a common issue of
+regular latitude-longitude grids is the convergence of meridians near the poles,
+which reduces the time-step as the resolution increases and therefore strongly
+penalizes the computational times. To bypass this `pole issue', we proposed a
+new quasi-area-preserving grid where the number of cells decreases as we get
+closer to the poles. This grid has quasi-uniform cell surfaces and preserves a
+rectangular latitude-longitude structure.
+
+As mass preservation is an important feature for the chemistry in a CTM, a
+finite-volume approach was chosen for advection on that grid. Global and local
+mass preservation is ensured by correcting the winds beforehand to ensure there
+are divergence free. Choosing the order of the scheme proved to be a compromise
+between accuracy and scability as higher-order schemes will increase the
+communication volume. As a result, a second-order van Leer scheme was chosen to
+favor scalability over accuracy. In practice, we expect to compensate the loss
+of accuracy with finer grid resolutions. The current bi-dimensional advection
+scheme and how it was adapted to our grid, along with general background
+information, was discussed in Chapter~\ref{chap:transport}.
+
+To validate the advection scheme adapted to the Pangolin grid, we examined key
+properties for an advection scheme, such as stability, accuracy and mass
+preservation (Chapter~\ref{chap:testing}). Pangolin was tested on algebraic test
+cases and compared to other state-of-the-art transport schemes, using a recently
+published testing suite. The other schemes were chosen such as to be also
+second-order accurate and implemented on various grids. It was found that the
+van Leer scheme implemented in Pangolin is in practice to be first-order.
+This explained why Pangolin was most of the time less accurate than the models
+selected here.  However, all the other schemes used a larger computational
+stencil and the loss in accuracy was compensated in all of the tests with a
+finer resolution. This is consistent with the initial design of the code where
+moderate accuracy was chosen in order to improve parallel performances.
+
+We have then examined the parallel performances of Pangolin using the MPI library
+(Chapter~\ref{chap:parallel}). Due to our Eulerian approach, the parallelization
+of the advection scheme is reduced to a domain decomposition problem. The global
+grid is decomposed into connex subdomains of equal-area, which guarantees the
+load balancing for advection. Instead of using a professional tool, we
+developed our own partitioning algorithm to take advantage of the algebraic
+features of the Pangolin grid. This choice was made to decrease the memory
+footprint of Pangolin, in agreement with the possible future trends for computer
+design as discussed in Chapter~\ref{chap:parallel}. The partitioning however
+constrains the number of cores to achieve load-balancing. Even though the
+constraint can be relaxed to accommodate other configurations, parallel
+performances only improved for an optimal number of cores. We studied the
+parallel performances of the 2D advection scheme up to 294 cores. The
+scalability was found to be promising and it was estimated that addition of the
+chemistry will largely improve it. We also examined the maximal number of cores
+at a coarse resolutions in a strong-scaling study to find the limit of
+parallelism of 2D advection. As expected, it was found that the parallel
+performances decrease in extreme configurations where the subdomains are so
+small that our strategy for hiding communication cost is no longer relevant.  With
+such extremely small subdomains, only a very small portion of the memory of the
+cores was used, making this configuration irrelevant for `real-life' simulations.
+
+After validating the parallel advection, a linear ozone chemistry scheme was
+added to examine the performances of Pangolin in `real-life' configurations and
+compare it to MOCAGE simulations. Pangolin was run in an offline mode, where
+wind and temperature data is forced every three hours. While MOCAGE has a 3D
+advection scheme, advection in Pangolin is only bi-dimensional so it was
+integrated using an isentropic vertical coordinate to make the comparison
+relevant. It was found that generally, the large-scale structures were similar
+and converge to the results of MOCAGE when the resolution is increased.
+
+\subsubsection*{Perspectives}
+Future versions of Pangolin will include an extension to 3D advection. The
+addition of the vertical advection will make the wind corrections more
+challenging. Also special care should be taken to obtain a non-divergent
+advection consistent with the model providing the wind velocities.  Adding the
+vertical advection will use the cores more effectively and as such improve the
+parallel performances. At the moment, 2D advection is not `expensive' enough to
+justify more than a few hundred of cores if the horizontal resolution at the
+Equator is limited to around $1\degre\times1\degre$. If a complex chemistry scheme is
+added, the chemical calculations should be expensive enough to greatly benefit
+from the parallelization strategy adopted by Pangolin. Therefore, a larger
+number of cores could be used in practice.
+
+However, the addition of chemistry will most likely introduce load unbalances
+due to several physical processes occurring not uniformly over the sphere
+(heterogeneous chemistry, surface emissions, convection, vertical diffusion or
+the day/night transitions).  Several strategies are possible to mitigate this
+load unbalance, the most promising being the combination of OpenMP and MPI for a
+hybrid parallel programming.
+
+%-------------------------------------------------------------------------------
+% French version
+%-------------------------------------------------------------------------------
+
+\selectlanguage{french}%
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion (français)}
+
+Le but de cette thèse était de concevoir et d'implanter une infrastructure
+pour un modèle de chimie-transport atmosphérique global qui soit adapté aux
+architectures massivement parallèles. Les caractéristiques de Pangolin ont été
+choisies afin que le modèle passes à l'échelle sur les architectures parallèles
+actuelles et futures. Nous nous sommes en particulier penchés sur le paradigme
+de programmation à base d'échanges de messages en l'appliquant à l'advection,
+ce qui a guidé notre stratégie de parallélisation. Un approche Eulérienne a été
+retenue pour le schéma d'advection sur la sphère et combinée avec un nouvel
+algorithme de décomposition de domaines. Cela a permis de faciliter la
+parallélisation du code et semble pouvoir concurrencer les approches
+semi-Lagrangiennes. En particulier, le modèle de chimie-transport de
+Météo-France, MOCAGE, utilise un schéma semi-Lagrangien. L'objectif de la thèse
+était d'examiner une approche alternative à MOCAGE pour exploiter les
+supercalculateurs de Météo-France. Un problème classique de la grille régulière
+latitude-longitude provient de la convergence des méridiens aux p\^oles, qui réduit
+le pas de temps lorsque la résolution augmente et pénalise donc fortement le
+temps de calcul. Pour éviter ce problème aux p\^oles, nous avons proposé une
+nouvelle grille préservant approximativement les aires des cellules. Comme le nombre
+de cellules décroît près des p\^oles, les surfaces des cellules sont quasiment
+uniformes sur la sphère. La grille possède également une structure rectangulaire
+latitude-longitude.
+
+La conservation de la masse est une propriété important pour les MCTs, c'est
+pourquoi une approche de type volume-finis a été utilisée sur notre grille. En
+corrigeant les vents en amont pour rendre leur divergence nulle, on obtient
+une conservation à la fois globale et locale de la masse. Le choix de l'ordre du
+schéma d'advection implique de faire un compromis entre la précision et la
+scalabilité car un ordre plus élevé augmentera le volume de communications.
+C'est pourquoi un schéma du second-ordre de type van Leer a été retenu, afin de
+privilégier la scalabilité. En pratique, la perte en précision sera compensée
+par des résolutions plus fines. Le schéma 2D ainsi que la manière dont il a été
+adapté à notre grille est présenté dans le chapitre~\ref{chap:transport}, avec
+une présentation plus générale de la problématique du transport.
+
+Afin de valider le schéma d'advection sur notre grille, nous avons examiné des
+propriétés essentielles pour un schéma d'advection, à savoir la stabilité, la
+précision et la préservation de la masse (chapitre~\ref{chap:testing}). De plus,
+Pangolin a été testé avec des cas tests analytiques et comparé à d'autres
+schémas de transport à l'aide d'un banc d'essai récemment publié. Les autres
+schémas ont été choisis tels qu'ils soient également du second-ordre et qu'ils
+soient implémentés sur différentes grilles. Les tests ont montré que le schéma
+de type van Leer implémenté dans Pangolin était en pratique d'ordre un. Cela
+explique pourquoi la plupart des tests ont montré que Pangolin était moins
+précis. Ce résultat doit être nuancé par le fait que les autres modèles
+utilisent un `halo' plus large. La différence en précision a été aussi
+compensée avec une résolution plus fine, ce qui est cohérent avec les
+hypothèses de conception où la scalabilité est privilégiée par rapport à la
+précision.
+
+Dans le chapitre~\ref{chap:parallel}, les performances en parallèle de Pangolin
+à l'aide de la librairie MPI ont été étudiées. L'approche Eulérienne retenue
+implique que la parallélisation de l'advection se ramène à un problème de
+décomposition de domaines. Il consiste à découper la grille en sous-domaines
+connexes de même taille afin de garantir l'équilibrage de la charge de calcul.
+Au lieu d'utiliser des outils déjà existants, nous avons développé un nouvel
+algorithme de partitionnement afin de prendre en compte les propriétés
+analytiques de la grille. Ce choix provient de la volonté de diminuer le coût en
+mémoire du modèle afin d'anticiper les tendances envisagées dans le
+chapitre~\ref{chap:parallel}. Cependant, le partitionnement impose une
+contrainte sur le nombre de c\oe{}urs pour que la charge de travail soit
+équilibrée. La contrainte peut être assouplie mais les performances parallèles
+ne seront améliorées que pour un nombre optimal de c\oe{}urs. Les performances en
+parallèles ont été testées pour l'advection avec 294 c\oe{}urs. Les résultats sont
+prometteurs et l'ajout de la chimie améliorera probablement fortement les
+performances. Nous avons également examiné le nombre maximal de c\oe{}urs pour une
+résolution grossière dans un test de \textit{strong-scaling} afin de déterminer la
+limite du parallélisme pour l'advection 2D. Il a été confirmé que les
+performances parallèles diminuent fortement quand les sous-domaines sont
+extrêmement petits. De telles configurations rendent notre stratégie de
+`recouvrement' des coûts de communications inefficace mais les sous-domaines
+sont suffisament petits pour que la mémoire des c\oe{}urs soient très peu
+utilisée. Ainsi, ces configurations ne correspondent pas à des situations
+réalistes.
+
+Afin d'effectuer une comparaison avec MOCAGE, un schéma linéaire pour l'ozone a
+été ajouté pour examiner les performances de Pangolin dans des situations
+réalistes. Pangolin a été utilisé en mode offline, où les vents et la
+température sont forcés toutes les trois heures. Comme Pangolin ne dispose
+actuelle que d'une advection 2D, nous avons utilisé des coordonnées isentropes
+pour que la comparaison avec l'advection 3D de MOCAGE soit pertinente. Les
+résultats ont montré que les structures les plus importantes sont bien
+préservées et que Pangolin converge vers les résultats de MOCAGE lorsque la
+résolution diminue.
+
+\subsubsection*{Perspectives}
+Une future version de Pangolin intègrera l'extension 3D pour l'advection.
+L'ajout de l'advection verticale rendra la correction des vents plus délicate.
+Il faudra aussi vérifier que l'advection non divergence soit cohérente avec le
+modèle d'où proviennent les vents. Avec l'advection verticale, les c\oe{}urs seront
+utilisés de manière plus efficace et cela améliorera les performances
+parallèles. Pour l'instant, l'advection 2D ne justifie pas d'utiliser plus d'une
+centaine de c\oe{}urs pour une résolution de $1\times1\degre$ à l'Équateur. Avec
+une chimie complexe, la charge de calcul devrait être suffisamment importante
+pour utiliser un nombre bien plus important de c\oe{}urs.
+
+Cependant, l'ajout de la chimie s'accompagnera très probablement d'un
+déséquilibre de la charge de calcul, due à la non-uniformité de certains
+processus physiques (chimie hétérogène, émissions de surface, convection,
+diffusion verticale ou la transition jour/nuit). Plusieurs stratégies sont
+possibles pour y remédier mais la plus prometteuse semble être une combinaison
+d'OpenMP et MPI pour une programmation parallèle hybride.
+\selectlanguage{english}

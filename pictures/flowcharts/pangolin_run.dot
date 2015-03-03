@@ -1,0 +1,49 @@
+digraph G {
+
+  node[shape="box"];
+
+  start[style=rounded];
+  end[style=rounded];
+  # Change size by hand
+  periodic[shape="diamond", fixedsize=true, width=1.4, height=1.2,
+    label="Reading\n periodic\n data ?"];
+  read_data[label="Read data"];
+  interpol_data[label="Temporal\n interpolation"];
+  advect[label="Advection"];
+  chem[label="Chemistry"];
+  last_iter[shape="diamond", fixedsize=true, width=1.2, height=1,
+   label="Last\n iteration ?"];
+
+  
+
+  # Allow to link betwee supgraphs;
+  compound = true;
+
+  start -> periodic;
+
+  subgraph cluster_0 {
+    style=filled;
+    color=lightgrey;
+    periodic -> read_data[label="yes"];
+    periodic -> interpol_data[label="no"];
+
+    # Align two nodes
+    #{rank=same; read_data, interpol_data}
+    label = "Input data";
+  }
+
+  read_data -> advect:n[lhead=cluster_1];
+  interpol_data -> advect:n[lhead=cluster_1];
+
+  subgraph cluster_1 {
+    style=filled;
+    color=lightgrey;
+
+    advect:s -> chem;
+    label = "Physics";
+  }
+
+  chem:s -> last_iter:n[weight=100];
+  last_iter:e -> periodic:e[label="no"];
+  last_iter -> end[label="yes"];
+}

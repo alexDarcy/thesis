@@ -1,0 +1,32 @@
+\documentclass[preview]{standalone}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+
+\begin{document}
+% Define our own subroutine environment
+\algblockdefx[subroutine]{Subroutine}{EndSubroutine}
+[1]{\textbf{subroutine} #1}{\textbf{end subroutine}}
+% Custom call
+\newcommand{\call}[1]{\textnormal{\texttt{#1}()}}
+
+  \begin{algorithmic}[1]
+    \Subroutine{meridional\_advection}{}
+    \State Starts ratio exchange for ghost cells
+    \State Compute zonal gradient on the interior
+    \State Wait for end of communications
+    \State Compute zonal gradient on the boundary
+    \State
+    \State Starts zonal gradient exchange for ghost cells
+    \State Compute meridional gradient on the interior
+    \State Wait for end of communications
+    \State Compute meridional gradient on the boundary
+    \State
+    \State Starts meridional gradient exchange for ghost cells
+    \State Compute meridional fluxes on the interior
+    \State Wait for end of communications
+    \State Compute meridional fluxes on the boundary
+    \State
+    \State Update all ratios
+\EndSubroutine
+\end{algorithmic}
+\end{document}

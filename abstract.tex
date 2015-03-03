@@ -1,0 +1,52 @@
+\newpage
+\thispagestyle{empty} 
+
+\begin{abstract}
+We present in this thesis the development of a large-scale bi-di\-men\-sio\-nal
+atmospheric transport scheme designed for parallel architectures with
+scalability in mind. The current version, named Pangolin, contains a
+bi-dimensional advection and a simple linear chemistry scheme for stratospheric
+ozone and will serve as a basis for a future \gls{CTM}. For mass-preservation, a
+van Leer finite-volume scheme was chosen for advection and extended to 2D with
+operator splitting. To ensure mass preservation, winds are corrected in a
+preprocessing step. We aim at addressing the "pole issue" of the traditional
+regular latitude-longitude by presenting a new quasi-area-preserving grid
+mapping the sphere uniformly. The parallelization of the model is based on the
+advection operator and a custom domain-decomposition algorithm is presented here
+to attain load-balancing in a message-passing context. To run efficiently on
+current and future parallel architectures, algebraic features of the grid are
+exploited in the advection scheme and parallelization algorithm to favor the
+cheaper costs of flops versus data movement. The model is validated on algebraic
+test cases and compared to other state-of-the-art schemes using a recent
+benchmark. Pangolin is also compared to the CTM of M\'et\'eo-France, MOCAGE,
+using a linear ozone scheme and isentropic coordinates.
+
+\end{abstract}
+
+\selectlanguage{french}%
+\begin{abstract}
+Cette thèse présente un modèle bi-dimensionnel pour le transport atmosphérique à
+grande échelle, nommé Pangolin, conçu pour passer à l'échelle sur les achitectures
+parallèles.  La version actuelle comporte une advection 2D ainsi qu'un schéma
+linéaire de chimie et servira de base pour un modèle de chimie-transport (MCT).
+Pour obtenir la conservation de la masse, un schéma en volume-finis de type van
+Leer a été retenu pour l'advection et étendu au cas 2D en utilisant des
+opérateurs alternés. La conservation de la masse est assurée en corrigeant les vents en
+amont. Nous proposons une solution au problème "des pôles" de la grille
+régulière latitude-longitude grâce à une nouvelle grille préservant
+approximativement les aires des cellules et couvrant la sphère uniformément. La
+parallélisation du modèle se base sur l'advection et utilise un algorithme de
+décomposition de domaines spécialement adapté à la grille. Cela permet d'obtenir
+l'équilibrage de la charge de calcul avec MPI, une librairie d'échanges de messages.
+Pour que les performances soient à la hauteur sur les architectures parallèles
+actuelles et futures, les propriétés analytiques de la grille sont exploitées
+pour le schéma d'advection et la parallélisation en privilégiant le moindre coût
+des flops par rapport aux mouvement de données. Le modèle est validé sur des cas
+tests analytiques et comparé à des schémas de transport à l'aide d'un comparatif
+récemment publié. Pangolin est aussi comparé au MCT de Météo-France via un schéma
+linéaire d'ozone et l'utilisation de coordonnées isentropes.
+
+\end{abstract}
+\selectlanguage{english}
+
+\newpage

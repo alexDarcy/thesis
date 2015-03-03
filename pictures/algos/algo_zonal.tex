@@ -1,0 +1,28 @@
+\documentclass[preview]{standalone}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+
+\begin{document}
+% Define our own subroutine environment
+\algblockdefx[subroutine]{Subroutine}{EndSubroutine}
+[1]{\textbf{subroutine} #1}{\textbf{end subroutine}}
+% Custom call
+\newcommand{\call}[1]{\textnormal{\texttt{#1}()}}
+
+% Cannot use algorithm as it does not work with standalone
+\begin{algorithmic}[1]
+  \Subroutine{zonal\_advection}{}
+  \State Starts ratio exchange for ghost cells
+  \State Compute zonal gradient on the interior
+  \State Wait for end of communications
+  \State Compute zonal gradient on the boundary
+  \State
+  \State Starts zonal gradient exchange for ghost cells
+  \State Compute zonal fluxes on the interior
+  \State Wait for end of communications
+  \State Compute zonal fluxes on the boundary
+  \State
+  \State Update all ratios
+\EndSubroutine
+\end{algorithmic}
+\end{document}

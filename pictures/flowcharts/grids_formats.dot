@@ -1,0 +1,12 @@
+digraph G {
+
+  node[shape="box"];
+
+  ecmwf[label="ECMWF\nSpectral grid", style=dashed];
+  mocage[label="MOCAGE\n3D lat-lon grid\nnetCDF"];
+  pango[label="Pangolin\n2D reduced grid\nHDF5"];
+
+  ecmwf -> mocage[style=dashed];
+  {rank=same; mocage pango}
+  mocage -> pango;
+  }

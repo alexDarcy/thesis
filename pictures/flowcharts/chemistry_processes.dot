@@ -1,0 +1,70 @@
+digraph G {
+
+  node[shape="box"];
+  edge[style=dashed];
+  # Allow to link betwee supgraphs;
+  compound = true;
+  ranksep="1";
+  #splines=false;
+
+  subgraph cluster_0 {
+    style=filled;
+    color=lightgrey;
+    list_forcing[color=white, style=filled,
+    label="Winds
+    Temperature
+    Humidity
+    Precipitations"];
+    label="Forcing";
+  }
+
+  subgraph cluster_1 {
+    style=filled;
+    color=lightgrey;
+    list_transfo[color=white, style=filled,
+    label="Homogeneous chemistry\nPhotodissociation\nHeterogeneous chemistry\nAeorosol microphysics"];
+    label="Transformations";
+  }
+
+  subgraph cluster_2 {
+    style=filled;
+    color=lightgrey;
+    list_transport[color=white, style=filled,
+    label="Advection\nTurbulent diffusion\nConvection\nParticles sedimentation"];
+    label="Transport";
+  }
+
+  subgraph cluster_3 {
+    style=filled;
+    color=lightgrey;
+    list_src[color=white, style=filled,
+    label="Anthropic emissions
+      Natural emissions"];
+    label="Source";
+  }
+
+  subgraph cluster_4 {
+    style=filled;
+    color=lightgrey;
+    list_sink[color=white, style=filled,
+    label="Lessivage\nDry deposit"];
+    label="Sink";
+  }
+
+
+  species[label="Atmospheric concentrations"];
+
+  # Link between clusters only
+  list_forcing -> list_transfo:n[ltail=cluster_0, lhead=cluster_1];
+  list_forcing -> list_transport:n[ltail=cluster_0, lhead=cluster_2];
+  list_forcing -> list_src:n[ltail=cluster_0, lhead=cluster_3];
+  list_forcing -> list_sink:n[ltail=cluster_0, lhead=cluster_4];
+
+  list_transfo -> species:w[ltail=cluster_1, dir="both"];
+  list_transport -> species[ltail=cluster_2]
+  list_src -> species[ltail=cluster_3];
+  list_sink -> species:e[ltail=cluster_4, dir="both"];
+
+  species -> list_forcing[lhead=cluster_0, style=filled];
+
+}

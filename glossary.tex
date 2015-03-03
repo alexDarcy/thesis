@@ -1,0 +1,206 @@
+% Emulate acronym behaviours: the first time, the long version is used, then the
+% short.
+\newglossaryentry{ECMWF}
+{ 
+  name={ECMWF},
+  description={European Centre for Medium-Range Weather Forecasts. It is an
+  European centre providing medium-range weather and seasonal forecasts},
+  first={{\glsentrylong{ECMWF}} (\glsentryname{ECMWF})},
+  long={European Centre for Medium-Range Weather Forecasts}
+  }
+\newglossaryentry{NCAR}
+{ 
+  name={NCAR},
+  description={National Center for Atmospheric Research. It is an federal
+  organisation, located in the US, which focus on climate, weather, air
+  chemistry and other related areas.},
+  first={{\glsentrylong{NCAR}} (\glsentryname{NCAR})},
+  long={National Center for Atmospheric Research}
+}
+\newglossaryentry{DWD}
+{ 
+  name={DWD},
+  description={Deutscher Wetterdienst. German weather agency.},
+  first={{\glsentrylong{DWD}} (\glsentryname{DWD})},
+  long={Deutscher Wetterdienst}
+}
+% Normal acronyms here
+\newacronym{NWP}{NWP}{Numerical Weather Prediction model}
+\newacronym{CMC}{CMC}{Canadian Meteorological Center}
+\newacronym{JMA}{JMA}{Japanese Meteorological Agency}
+\newacronym{CFL}{CFL}{Courant-Friedrichs-Lewy}
+\newacronym{CTM}{CTM}{Chemistry Transport Model}
+\newacronym{MCT}{MCT}{Mod\`ele de Chimie-Transport}
+\newacronym{GCM}{GCM}{Global Climate Model}
+\newacronym{PPM}{PPM}{Piecewise Parabolic Method}
+\newacronym{DCISL}{DCISL}{Departure Cell-Integrated Semi-Lagrangian}
+\newacronym{SOM}{SOM}{Second-Order Moments}
+\newacronym{GMD}{GMD}{Geoscientific Model Development}
+\newacronym{flops}{flops}{floating-point operations per seconds}
+\newacronym{HPC}{HPC}{High Performance Computing}
+\newacronym{GPU}{GPU}{Graphics Processing Unit}
+\newacronym{UPC}{UPC}{Unified Parallel C}
+\newacronym{PGAS}{PGAS}{Partitioned Global Adress Space}
+\newacronym{PVM}{PVM}{Parallel Virtual Machine}
+\newacronym{API}{API}{Application Programming Interface}
+\newacronym{OpenMP}{OpenMP}{Open Multi-Processing}
+\newacronym{MPI}{MPI}{Message Passing Interface}
+\newacronym{netCDF}{netCDF}{Network Common Data Form}
+\newacronym{HDF}{HDF}{Hierarchical Data Format}
+\newacronym{ODE}{ODE}{Ordinary Differential Equation}
+\newacronym{FFT}{FFT}{Fast Fourier Transform}
+
+%-------------------------------------------------------------------------------
+% Convention: the word in the text is lower case but upper case in the glossary.
+% So we use the key "text".
+\newglossaryentry{biogenic}
+{
+  name={Biogenic},
+  text={biogenic},
+  description={Is said from substances produced by living organisms or
+  biological processes. Examples: coal, oil, pearls, silk}
+}
+\newglossaryentry{stratosphere}
+{
+  name={Stratosphere},
+  text={stratosphere},
+  description={second atmosphere layer. It is located between the troposphere
+  and the mesosphere. At mid-latitudes, it is situated between 18-13km and
+  50km}
+}
+\newglossaryentry{troposphere}
+{
+  name={Troposphere},
+  text={troposphere},
+  description={first atmosphere layer from the surface of the Earth to the
+  tropopause, which separates it from the stratosphere. It contains more than
+  80\% of the total mass of the atmosphere. At mid-latitudes, its depth is
+  around 17km}
+}
+\newglossaryentry{CPU}
+{
+  name=CPU,
+  description={Central Processing Unit. It carries out instructions
+  stored in a program. For that, it executes arithmetical, logical and I/O
+  operations}
+}
+\newglossaryentry{processor}
+{
+  name=Processor,
+  description={a multi-purpose, programmable device.  Modern processors are
+  multi-cores, i.e they contains several CPUs}
+}
+\newglossaryentry{conformal}
+{
+  name={Conformal projection},
+  text={conformal},
+  description={this projection preserves the angles locally (i.e at the
+  intersection of the lines. In particular, parallel cross meridians at right
+  angles. In practice, dimensions are deformed when far from the center (they
+  do not preserve areas) and as such, are used for global instead of regional
+  maps. Most conformal maps have singularities}
+}
+\newglossaryentry{area-preserving projection}
+{
+  name={Area-preserving projection},
+  text={area-preserving projection},
+  description={this projection preserves the ratio of areas on the map and the
+  areas of the globe. However, it does not preserve distances}
+}
+\newglossaryentry{gnomonic}
+{
+  name={Gnomonic projection},
+  text={gnomonic projection},
+  description={a projection which represents the shortest route between two
+  points (greats circles) as straight lines, which makes it easy to find the
+  shortest path between two points. However, distance and shape are distorted,
+  except near the center of the projection}
+}
+\newglossaryentry{Robinson projection}
+{
+  name={Robinson projection},
+  description={a projection, which is neither area-preserving nor conformal but
+  aims to represents the whole world in a "good-looking" way. In particular, it
+  aims to reduce the global distortion. Used by the National Geographic Society
+  between 1988 and 1998}
+}
+\newglossaryentry{Lambert equal-area projection}
+{
+  name={Lambert equal-area projection},
+  description={As an azimuthal projection, it maps a portion of the globe to
+  a tangent plane. It also preserves the areas. When used for a global map,
+  shapes are distorted near the boundaries}
+}
+
+\newglossaryentry{process}{
+  name={Process}, 
+  text={process},
+  description={can be defined as an adress space and the current state of a
+  program (program counter, call stack, register values).  Different processes
+  do not share resources between them, contrary to threads},
+  plural = {processes}
+}
+\newglossaryentry{thread}{
+  name={Thread}, 
+  text={thread},
+  description={smallest set of instructions that can be managed independently by
+  the operating system (program counter and call stack). It is a lightweight
+  process. If several threads exist in the same process, they share resources
+  (e.g memory)}
+}
+\newglossaryentry{stereographic}
+{
+  name={Stereographic projection},
+  text={stereographic},
+  description={this conformal projection maps the whole sphere onto a plane, except the
+  projection point. For a projection center at the North pole, It computes the
+  intersection of the line between the pole and the considered point with the
+  plane $z=0$}
+}
+%\glossentry[numa]{NUMA}
+%See
+%\href{http://www.compunity.org/training/tutorials/2\%20Basic\_Concepts\_Parallelization.pdf}{this
+%link} for a picture.
+%
+%\glossentry[semiimplicit]{Semi-implicit scheme}
+%For a pair of equation between $a$ and $b$, use $a^n$ and $b^n$ to
+%compute $b^{n+1}$, then $b^{n+1}$ and $a^n$ to compute $a^{n+1}$.
+%
+%\glossentry[SMP]{Symmetric Multi-Processing (SMP)}
+%Architecture with several processors having access to a shared main memory. They
+%are controlled by a single OS and have full access to I/O.
+%See
+%\href{http://www.compunity.org/training/tutorials/2\%20Basic\_Concepts\_Parallelization.pdf}{this
+%link} for a picture.
+%
+
+\newglossaryentry{die}
+{
+  name={Die},
+  text={die},
+  description={integrated circuits on a small piece of a semi-conducting
+  material}
+}
+\newglossaryentry{stencil}
+{
+  name={Stencil},
+  text={stencil},
+  description={for numerical schemes, it indicates the number of adjacent cells
+  needed to compute the given quantity}
+}
+\newglossaryentry{overhead}
+{
+  name={Overhead},
+  text={overhead},
+  description={happens when additional computer resources are needed to achieve a
+  particular goal. For example, MPI overhead can happen for blocking operations,
+  ,i.e a certain process loses time by waiting a request} 
+}
+\newglossaryentry{endianness}
+{
+  name={Endianess},
+  text={endianness},
+  description={Describes how the bytes of a word are ordered in the memory. In
+  big-endian configurations, the most significant byte has the smallest address.
+  .In little-endian, the least significant byte has the largest address}
+}

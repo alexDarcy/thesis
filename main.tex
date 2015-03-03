@@ -1,0 +1,143 @@
+% We need the oldfonts to work nice with tlsflyleaf
+\documentclass[oldfontcommands, twoside]{memoir}
+%\documentclass[oldfontcommands, twoside, draft]{memoir}
+
+\input title
+\usepackage{graphicx}
+
+\usepackage[utf8]{inputenc}
+% English is the main language
+\usepackage[french, english]{babel}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  citecolor=blue
+}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode} % For \Require
+\usepackage{algorithm}
+
+\usepackage[babel=true]{csquotes} % for guillemet
+\newsubfloat{figure}% Allow subfloats in figure environment
+
+\usepackage[toc]{glossaries} % must be loaded after hyperref
+% For bibliography format (Williamson 2004)
+\usepackage[round]{natbib}
+\usepackage{amsmath}
+% For proofs
+\usepackage{amsthm}
+
+% Configure margin notes (needed by \marginpar)
+\setmarginnotes{1cm}{2cm}{\baselineskip}
+
+% Faster compilation time on pannus
+\graphicspath{%
+{pictures/}%
+{pictures/asymptote/}%
+{pictures/flowcharts/}%
+{pictures/results/}%
+{pictures/grids/}%
+{pictures/matlab/}%
+{pictures/metapost/}%
+{pictures/mocage_comparison/}%
+{pictures/paper/}%
+{pictures/partitioning/}%
+{pictures/scheme/}}
+
+% Custom degree
+\def\degree{$^{\circ}$}
+\def\degre{^{\circ}}
+\def\needref{$^{\text{ref needed}}$}
+
+% Custom todo
+\def\todo#1{\textbf{TODO}{: #1}}
+
+%-------------------------------------------------------------------------------
+% Manuscript configuration
+%-------------------------------------------------------------------------------
+\chapterstyle{madsen}
+
+\newcomment{later}
+\commentson{later}
+
+% Index
+%\makeindex
+
+\input glossary
+\makeglossaries
+
+%-------------------------------------------------------------------------------
+
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1}
+%DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}
+%DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+\begin{document}
+\makeflyleaf
+
+\input copyright
+
+\cleardoublepage
+
+\null\vspace{\stretch{1}}
+\thispagestyle{empty} 
+\begin{flushright}
+\`A mes parents
+\end{flushright}
+\null\vspace{\stretch{1}}
+
+
+\cleardoublepage
+\input thanks
+
+\cleardoublepage
+\input abstract
+
+\cleardoublepage
+% Must be put here
+\pagestyle{ruled}
+
+\tableofcontents*
+
+\input intro
+
+\input transport
+\input testing
+\input parallel
+\input real_case
+
+\input conclusion
+
+\appendix
+\input appendix
+
+\printindex
+
+\cleardoublepage
+\bibliographystyle{plainnat}
+\bibliography{bibliography/library,bibliography/library_others}
+
+% For debug
+%\glsaddall
+\printglossaries
+
+\end{document}
