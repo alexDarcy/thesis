@@ -5,6 +5,9 @@ This work is licensed under a Creative Commons Attributions 3.0 License.
 To view a copy of the license, go to:
 http://creativecommons.org/licenses/by/3.0/
 
+## Download
+The final pdf is available [on Github](https://github.com/alexDarcy/thesis/releases/download/v1.0/manuscript_praga.pdf).
+
 ### Abstract
 We present in this thesis the development of a large-scale bi-dimensional
 atmospheric transport scheme designed for parallel architectures with
